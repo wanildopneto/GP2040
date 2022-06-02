@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import { Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import { useContext } from 'react';
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { NavLink } from "react-router-dom";
 import { AppContext } from '../Contexts/AppContext';
-import FormSelect from './FormSelect';
-import { saveButtonLabels } from '../Services/Storage';
 import BUTTONS from '../Data/Buttons.json';
+import { saveButtonLabels } from '../Services/Storage';
+import FormSelect from './FormSelect';
 import './Navigation.scss';
 
 const Navigation = (props) => {

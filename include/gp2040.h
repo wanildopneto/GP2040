@@ -41,6 +41,7 @@ public:
 	absolute_time_t nextRunTime;
 	const uint32_t intervalMS = 10;
 	inline bool isEnabled() { return enabled; }
+
 protected:
 	bool enabled = true;
 };

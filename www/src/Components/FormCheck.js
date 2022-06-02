@@ -1,7 +1,6 @@
-import React from 'react';
 import { Form } from 'react-bootstrap';
 
-import './FormCheck.scss'
+import './FormCheck.scss';
 
 const FormControl = ({ label, error, groupClassName, ...props }) => {
 	return (

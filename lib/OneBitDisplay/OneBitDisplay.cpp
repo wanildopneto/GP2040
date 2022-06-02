@@ -29,8 +29,8 @@
 
 // Initialization sequences
 const unsigned char oled128_initbuf[] = {0x00, 0xae, 0xdc, 0x00, 0x81, 0x40,
-                                         0xa1, 0xc8, 0xa8, 0x7f, 0xd5, 0x50, 0xd9, 0x22, 0xdb, 0x35, 0xb0, 0xda, 0x12,
-                                         0xa4, 0xa6, 0xaf};
+																				 0xa1, 0xc8, 0xa8, 0x7f, 0xd5, 0x50, 0xd9, 0x22, 0xdb, 0x35, 0xb0, 0xda, 0x12,
+																				 0xa4, 0xa6, 0xaf};
 
 const unsigned char oled64x128_initbuf[] = {
 		0x00, 0xae, 0xd5, 0x51, 0x20, 0xa8, 0x3f, 0xdc, 0x00, 0xd3, 0x60, 0xad, 0x80, 0xa6, 0xa4, 0xa0, 0xc0, 0x81, 0x40, 0xd9, 0x22, 0xdb, 0x35, 0xaf};
@@ -38,16 +38,16 @@ const unsigned char oled64x128_initbuf[] = {
 const unsigned char oled132_initbuf[] = {0x00, 0xae, 0x02, 0x10, 0x40, 0x81, 0xa0, 0xc0, 0xa6, 0xa8, 0x3f, 0xd3, 0x00, 0xd5, 0x80, 0xd9, 0xf1, 0xda, 0x12, 0xdb, 0x40, 0x20, 0x02, 0xa4, 0xa6};
 
 const unsigned char oled64_initbuf[] = {0x00, 0xae, 0xa8, 0x3f, 0xd3, 0x00, 0x40, 0xa1, 0xc8,
-                                        0xda, 0x12, 0x81, 0xff, 0xa4, 0xa6, 0xd5, 0x80, 0x8d, 0x14,
-                                        0xaf, 0x20, 0x02};
+																				0xda, 0x12, 0x81, 0xff, 0xa4, 0xa6, 0xd5, 0x80, 0x8d, 0x14,
+																				0xaf, 0x20, 0x02};
 
 const unsigned char oled32_initbuf[] = {
 		0x00, 0xae, 0xd5, 0x80, 0xa8, 0x1f, 0xd3, 0x00, 0x40, 0x8d, 0x14, 0xa1, 0xc8, 0xda, 0x02,
 		0x81, 0x7f, 0xd9, 0xf1, 0xdb, 0x40, 0xa4, 0xa6, 0xaf};
 
 const unsigned char oled72_initbuf[] = {0x00, 0xae, 0xa8, 0x3f, 0xd3, 0x00, 0x40, 0xa1, 0xc8,
-                                        0xda, 0x12, 0x81, 0xff, 0xad, 0x30, 0xd9, 0xf1, 0xa4, 0xa6, 0xd5, 0x80, 0x8d, 0x14,
-                                        0xaf, 0x20, 0x02};
+																				0xda, 0x12, 0x81, 0xff, 0xad, 0x30, 0xd9, 0xf1, 0xa4, 0xa6, 0xd5, 0x80, 0x8d, 0x14,
+																				0xaf, 0x20, 0x02};
 
 const unsigned char uc1701_initbuf[] = {0xe2, 0x40, 0xa0, 0xc8, 0xa2, 0x2c, 0x2e, 0x2f, 0xf8, 0x00, 0x23, 0x81, 0x28, 0xac, 0x00, 0xa6};
 
@@ -103,11 +103,11 @@ void obdDumpWindow(OBDISP *pOBDSrc, OBDISP *pOBDDest, int srcx, int srcy, int de
 				obdCachedWrite(pOBDDest, ucTemp, tx, 1);
 			}
 			else
-			{                                     // simpler case
+			{																			// simpler case
 				obdCachedWrite(pOBDDest, s, tx, 1); // just copy it
 			}
 		} // for x
-	}   // for y
+	}		// for y
 	obdCachedFlush(pOBDDest, 1);
 } /* obdDumpWindow() */
 
@@ -153,7 +153,7 @@ void obdWriteLCDLine(OBDISP *pOBD, uint8_t *pSrc, int iLine)
 	_I2CWrite(pOBD, ucLineBuf, iPitch + 3);
 	ucLineBuf[1] = 0;
 	_I2CWrite(pOBD, ucLineBuf, 2); // final transfer
-	gpio_put(pOBD->iCSPin, LOW);   // de-activate
+	gpio_put(pOBD->iCSPin, LOW);	 // de-activate
 } /* obdWriteLCDLine() */
 
 //
@@ -235,7 +235,7 @@ void obdSPIInit(OBDISP *pOBD, int iType, int iDC, int iCS, int iReset, int iMOSI
 	pOBD->type = iType;
 	pOBD->flip = bFlip;
 	pOBD->invert = bInvert;
-	pOBD->wrap = 0;           // default - disable text wrap
+	pOBD->wrap = 0;						// default - disable text wrap
 	pOBD->com_mode = COM_SPI; // communication mode
 
 	gpio_set_dir(pOBD->iCSPin, true);
@@ -367,7 +367,7 @@ void obdSPIInit(OBDISP *pOBD, int iType, int iDC, int iCS, int iReset, int iMOSI
 		obdWriteCommand(pOBD, 0xaf); // turn on display
 		if (bInvert)
 		{
-			uc[0] = 0;    // command
+			uc[0] = 0;		// command
 			uc[1] = 0xa7; // invert command
 			_I2CWrite(pOBD, uc, 2);
 		}
@@ -411,7 +411,7 @@ void obdSPIInit(OBDISP *pOBD, int iType, int iDC, int iCS, int iReset, int iMOSI
 		obdWriteCommand(pOBD, 0x81); // set PM
 		obdWriteCommand(pOBD, 0x90); // set contrast to 144
 		obdWriteCommand(pOBD, 0xaf); // display enable
-		if (bFlip)                   // flip horizontal + vertical
+		if (bFlip)									 // flip horizontal + vertical
 		{
 			obdWriteCommand(pOBD, 0xa1); // set SEG direction (A1 to flip horizontal)
 			obdWriteCommand(pOBD, 0xc2); // set COM direction (C0 to flip vert)
@@ -478,9 +478,9 @@ int obdI2CInit(OBDISP *pOBD, int iType, int iAddr, int bFlip, int bInvert, int b
 	// Detect the display controller (SSD1306, SH1107 or SH1106)
 	uint8_t u = 0;
 	I2CReadRegister(&pOBD->bbi2c, pOBD->oled_addr, 0x00, &u, 1); // read the status register
-	u &= 0x0f;                                                   // mask off power on/off bit
-	if ((u == 0x7 || u == 0xf) && pOBD->type == OLED_128x128)    // SH1107
-	{                                                            // A single SSD1306 display returned 7, so only act on it if the
+	u &= 0x0f;																									 // mask off power on/off bit
+	if ((u == 0x7 || u == 0xf) && pOBD->type == OLED_128x128)		 // SH1107
+	{																														 // A single SSD1306 display returned 7, so only act on it if the
 		// user specified that they're working with a 128x128 display
 		rc = OLED_SH1107_3C;
 		bFlip = !bFlip; // SH1107 seems to have this reversed from the usual direction
@@ -527,7 +527,7 @@ int obdI2CInit(OBDISP *pOBD, int iType, int iAddr, int bFlip, int bInvert, int b
 	_I2CWrite(pOBD, uc, u8Len);
 	if (bInvert)
 	{
-		uc[0] = 0;    // command
+		uc[0] = 0;		// command
 		uc[1] = 0xa7; // invert command
 		_I2CWrite(pOBD, uc, 2);
 	}
@@ -696,7 +696,7 @@ static void SharpDumpBuffer(OBDISP *pOBD, uint8_t *pBuffer)
 	ucLineBuf[1] = ucStart;
 	// this code assumes I2C, so the first byte is ignored
 	_I2CWrite(pOBD, ucLineBuf, 2); // write command(01) + vcom(02)
-	ucVCOM = !ucVCOM;              // need to toggle this each transaction
+	ucVCOM = !ucVCOM;							 // need to toggle this each transaction
 
 	// We need to flip and invert the image in code because the Sharp memory LCD
 	// controller only has the simplest of commands for data writing
@@ -751,7 +751,7 @@ static void SharpDumpBuffer(OBDISP *pOBD, uint8_t *pBuffer)
 	}
 	ucLineBuf[1] = 0;
 	_I2CWrite(pOBD, ucLineBuf, 2); // final transfer
-	gpio_put(pOBD->iCSPin, LOW);   // de-activate
+	gpio_put(pOBD->iCSPin, LOW);	 // de-activate
 } /* SharpDumpBuffer() */
 //
 // Dump a screen's worth of data directly to the display
@@ -781,7 +781,7 @@ void obdDumpBuffer(OBDISP *pOBD, uint8_t *pBuffer)
 	iCols = pOBD->width >> 4;
 	for (y = 0; y < iLines; y++)
 	{
-		bNeedPos = 1;               // start of a new line means we need to set the position too
+		bNeedPos = 1;								// start of a new line means we need to set the position too
 		for (x = 0; x < iCols; x++) // wiring library has a 32-byte buffer, so send 16 bytes so that the data prefix (0x40) can fit
 		{
 			if (pOBD->ucScreen == NULL || pBuffer == pSrc || memcmp(pSrc, pBuffer, 16) != 0) // doesn't match, need to send it
@@ -800,7 +800,7 @@ void obdDumpBuffer(OBDISP *pOBD, uint8_t *pBuffer)
 			}
 			pSrc += 16;
 			pBuffer += 16;
-		}                               // for x
+		}																// for x
 		pSrc += (iPitch - pOBD->width); // for narrow displays, skip to the next line
 		pBuffer += (iPitch - pOBD->width);
 	} // for y
@@ -827,8 +827,8 @@ static int obdMenuReadRotary(SIMPLEMENU *sm)
 		sm->store <<= 4;
 		sm->store |= sm->prevNextCode;
 		c = sm->store & 0xff;
-		//if (store==0xd42b) return 1;
-		//if (store==0xe817) return -1;
+		// if (store==0xd42b) return 1;
+		// if (store==0xe817) return -1;
 		if ((c & 0xf) == 2)
 			rc = -1;
 		else if ((c & 0xf) == 1)
@@ -847,18 +847,18 @@ int obdMenuInit(OBDISP *pOBD, SIMPLEMENU *sm, char **pText, int iFontSize, int b
 	if (sm == NULL || pText == NULL)
 		return 0;
 	sm->pOBD = pOBD;
-	sm->u8Up = btnUp;       // pin numbers of the action buttons
-	sm->u8Dn = btnDn;       // or rotary A line
+	sm->u8Up = btnUp;				// pin numbers of the action buttons
+	sm->u8Dn = btnDn;				// or rotary A line
 	sm->u8Enter = btnEnter; // or rotary B line
 	sm->bIsRotary = bIsRotary;
-	sm->u8BtnState = 0;           // no active buttons to start
+	sm->u8BtnState = 0;						// no active buttons to start
 	sm->iPressed = iPressedState; // active state of a pressed button
 	sm->bCenter = bCenter;
 	sm->iFontSize = iFontSize;
 	sm->pMenuText = pText;
-	sm->iMenuIndex = 0;                               // start at first item
-	sm->iDispX = 128;                                 // DEBUG
-	sm->iDispY = 64;                                  // DEBUG
+	sm->iMenuIndex = 0;																// start at first item
+	sm->iDispX = 128;																	// DEBUG
+	sm->iDispY = 64;																	// DEBUG
 	sm->bOneButton = (btnDn == -1 && btnEnter == -1); // only 1 button defined
 	sm->pfnCallback = NULL;
 	sm->prevNextCode = 0;
@@ -869,7 +869,7 @@ int obdMenuInit(OBDISP *pOBD, SIMPLEMENU *sm, char **pText, int iFontSize, int b
 		iLen++;
 	}
 	sm->iMenuLen = iLen - 1; // don't count the title text
-	return 1;                // success
+	return 1;								 // success
 } /* obdMenuInit() */
 
 //
@@ -919,7 +919,7 @@ void obdMenuShow(SIMPLEMENU *sm, int iItem)
 	if (iItem == -1) // show the entire menu
 	{
 		obdFill(sm->pOBD, 0, 0);
-		x = obdMenuGetItem(sm, 0, szTemp);                               // get the title text
+		x = obdMenuGetItem(sm, 0, szTemp);															 // get the title text
 		obdMenuShowItem(sm->pOBD, x, 0, szTemp, 0, 0, sm->iFontSize, 0); // show title
 		iFirst = 0;
 		iLast = iCount - 1;
@@ -1006,7 +1006,7 @@ int obdMenuDelta(SIMPLEMENU *sm, int iDelta)
 
 	iNewIndex = sm->iMenuIndex + iDelta;
 	if (!sm->bOneButton && (iNewIndex < 0 || iNewIndex >= sm->iMenuLen)) // no change possible, exit
-		return sm->iMenuIndex;                                             // unchanged
+		return sm->iMenuIndex;																						 // unchanged
 	// If we are using a single button, wrap around the ends
 	if (iNewIndex < 0)
 		iNewIndex = (sm->iMenuLen - 1);
@@ -1090,7 +1090,7 @@ int obdMenuRun(SIMPLEMENU *sm)
 					ul = to_ms_since_boot(get_absolute_time()) - sm->ulPressTime;
 					if (ul < MENU_LONG_PRESS) // short press = navigate menu
 						obdMenuDelta(sm, 1);
-					else                   // treat it like a long press
+					else									 // treat it like a long press
 						rc = sm->iMenuIndex; // action
 				}
 			}
@@ -1099,7 +1099,7 @@ int obdMenuRun(SIMPLEMENU *sm)
 				if (gpio_get(sm->u8Dn) == sm->iPressed)
 					buttons |= 2;
 				if (gpio_get(sm->u8Enter) == sm->iPressed)
-					rc = sm->iMenuIndex;                               // user pressed ENTER, return current menu index
+					rc = sm->iMenuIndex;															 // user pressed ENTER, return current menu index
 				if ((sm->u8BtnState & 1) == 0 && (buttons & 1) == 1) // Up button pressed
 				{
 					obdMenuDelta(sm, -1);

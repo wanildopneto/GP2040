@@ -46,8 +46,8 @@ using namespace std;
 extern struct fsdata_file file__index_html[];
 extern Gamepad gamepad;
 
-const static vector<string> spaPaths = { "/display-config", "/led-config", "/pin-mapping", "/settings", "/reset-settings" };
-const static vector<string> excludePaths = { "/css", "/images", "/js", "/static" };
+const static vector<string> spaPaths = {"/display-config", "/led-config", "/pin-mapping", "/settings", "/reset-settings"};
+const static vector<string> excludePaths = {"/css", "/images", "/js", "/static"};
 static char *http_post_uri;
 static char http_post_payload[LWIP_HTTPD_POST_MAX_PAYLOAD_LEN];
 static uint16_t http_post_payload_len = 0;
@@ -107,13 +107,13 @@ string getDisplayOptions()
 	DynamicJsonDocument doc(LWIP_HTTPD_POST_MAX_PAYLOAD_LEN);
 
 	BoardOptions options = getBoardOptions();
-	doc["enabled"]       = options.hasI2CDisplay ? 1 : 0;
-	doc["sdaPin"]        = options.i2cSDAPin;
-	doc["sclPin"]        = options.i2cSCLPin;
-	doc["i2cAddress"]    = options.displayI2CAddress;
-	doc["i2cBlock"]      = options.i2cBlock;
-	doc["i2cSpeed"]      = options.i2cSpeed;
-	doc["flipDisplay"]   = options.displayFlip ? 1 : 0;
+	doc["enabled"] = options.hasI2CDisplay ? 1 : 0;
+	doc["sdaPin"] = options.i2cSDAPin;
+	doc["sclPin"] = options.i2cSCLPin;
+	doc["i2cAddress"] = options.displayI2CAddress;
+	doc["i2cBlock"] = options.i2cBlock;
+	doc["i2cSpeed"] = options.i2cSpeed;
+	doc["flipDisplay"] = options.displayFlip ? 1 : 0;
 	doc["invertDisplay"] = options.displayInvert ? 1 : 0;
 
 	auto usedPins = doc.createNestedArray("usedPins");
@@ -144,14 +144,14 @@ string setDisplayOptions()
 	DynamicJsonDocument doc = get_post_data();
 
 	BoardOptions options = getBoardOptions();
-	options.hasI2CDisplay     = doc["enabled"];
-	options.i2cSDAPin         = doc["sdaPin"];
-	options.i2cSCLPin         = doc["sclPin"];
+	options.hasI2CDisplay = doc["enabled"];
+	options.i2cSDAPin = doc["sdaPin"];
+	options.i2cSCLPin = doc["sclPin"];
 	options.displayI2CAddress = doc["i2cAddress"];
-	options.i2cBlock          = doc["i2cBlock"];
-	options.i2cSpeed          = doc["i2cSpeed"];
-	options.displayFlip       = doc["flipDisplay"];
-	options.displayInvert     = doc["invertDisplay"];
+	options.i2cBlock = doc["i2cBlock"];
+	options.i2cSpeed = doc["i2cSpeed"];
+	options.displayFlip = doc["flipDisplay"];
+	options.displayInvert = doc["invertDisplay"];
 
 	setBoardOptions(options);
 	GamepadStore.save();
@@ -164,9 +164,9 @@ string getGamepadOptions()
 	DynamicJsonDocument doc(LWIP_HTTPD_POST_MAX_PAYLOAD_LEN);
 
 	GamepadOptions options = GamepadStore.getGamepadOptions();
-	doc["dpadMode"]  = options.dpadMode;
+	doc["dpadMode"] = options.dpadMode;
 	doc["inputMode"] = options.inputMode;
-	doc["socdMode"]  = options.socdMode;
+	doc["socdMode"] = options.socdMode;
 
 	return serialize_json(doc);
 }
@@ -175,9 +175,9 @@ string setGamepadOptions()
 {
 	DynamicJsonDocument doc = get_post_data();
 
-	gamepad.options.dpadMode  = doc["dpadMode"];
+	gamepad.options.dpadMode = doc["dpadMode"];
 	gamepad.options.inputMode = doc["inputMode"];
-	gamepad.options.socdMode  = doc["socdMode"];
+	gamepad.options.socdMode = doc["socdMode"];
 	gamepad.save();
 
 	return serialize_json(doc);
@@ -187,33 +187,87 @@ string getLedOptions()
 {
 	DynamicJsonDocument doc(LWIP_HTTPD_POST_MAX_PAYLOAD_LEN);
 
-	doc["dataPin"]           = ledModule.ledOptions.dataPin;
-	doc["ledFormat"]         = ledModule.ledOptions.ledFormat;
-	doc["ledLayout"]         = ledModule.ledOptions.ledLayout;
-	doc["ledsPerButton"]     = ledModule.ledOptions.ledsPerButton;
+	doc["dataPin"] = ledModule.ledOptions.dataPin;
+	doc["ledFormat"] = ledModule.ledOptions.ledFormat;
+	doc["ledLayout"] = ledModule.ledOptions.ledLayout;
+	doc["ledsPerButton"] = ledModule.ledOptions.ledsPerButton;
 	doc["brightnessMaximum"] = ledModule.ledOptions.brightnessMaximum;
-	doc["brightnessSteps"]   = ledModule.ledOptions.brightnessSteps;
+	doc["brightnessSteps"] = ledModule.ledOptions.brightnessSteps;
 
 	auto ledButtonMap = doc.createNestedObject("ledButtonMap");
 
-	if (ledModule.ledOptions.indexUp == -1)    ledButtonMap["Up"]    = nullptr;  else ledButtonMap["Up"]    = ledModule.ledOptions.indexUp;
-	if (ledModule.ledOptions.indexDown == -1)  ledButtonMap["Down"]  = nullptr;  else ledButtonMap["Down"]  = ledModule.ledOptions.indexDown;
-	if (ledModule.ledOptions.indexLeft == -1)  ledButtonMap["Left"]  = nullptr;  else ledButtonMap["Left"]  = ledModule.ledOptions.indexLeft;
-	if (ledModule.ledOptions.indexRight == -1) ledButtonMap["Right"] = nullptr;  else ledButtonMap["Right"] = ledModule.ledOptions.indexRight;
-	if (ledModule.ledOptions.indexB1 == -1)    ledButtonMap["B1"]    = nullptr;  else ledButtonMap["B1"]    = ledModule.ledOptions.indexB1;
-	if (ledModule.ledOptions.indexB2 == -1)    ledButtonMap["B2"]    = nullptr;  else ledButtonMap["B2"]    = ledModule.ledOptions.indexB2;
-	if (ledModule.ledOptions.indexB3 == -1)    ledButtonMap["B3"]    = nullptr;  else ledButtonMap["B3"]    = ledModule.ledOptions.indexB3;
-	if (ledModule.ledOptions.indexB4 == -1)    ledButtonMap["B4"]    = nullptr;  else ledButtonMap["B4"]    = ledModule.ledOptions.indexB4;
-	if (ledModule.ledOptions.indexL1 == -1)    ledButtonMap["L1"]    = nullptr;  else ledButtonMap["L1"]    = ledModule.ledOptions.indexL1;
-	if (ledModule.ledOptions.indexR1 == -1)    ledButtonMap["R1"]    = nullptr;  else ledButtonMap["R1"]    = ledModule.ledOptions.indexR1;
-	if (ledModule.ledOptions.indexL2 == -1)    ledButtonMap["L2"]    = nullptr;  else ledButtonMap["L2"]    = ledModule.ledOptions.indexL2;
-	if (ledModule.ledOptions.indexR2 == -1)    ledButtonMap["R2"]    = nullptr;  else ledButtonMap["R2"]    = ledModule.ledOptions.indexR2;
-	if (ledModule.ledOptions.indexS1 == -1)    ledButtonMap["S1"]    = nullptr;  else ledButtonMap["S1"]    = ledModule.ledOptions.indexS1;
-	if (ledModule.ledOptions.indexS2 == -1)    ledButtonMap["S2"]    = nullptr;  else ledButtonMap["S2"]    = ledModule.ledOptions.indexS2;
-	if (ledModule.ledOptions.indexL3 == -1)    ledButtonMap["L3"]    = nullptr;  else ledButtonMap["L3"]    = ledModule.ledOptions.indexL3;
-	if (ledModule.ledOptions.indexR3 == -1)    ledButtonMap["R3"]    = nullptr;  else ledButtonMap["R3"]    = ledModule.ledOptions.indexR3;
-	if (ledModule.ledOptions.indexA1 == -1)    ledButtonMap["A1"]    = nullptr;  else ledButtonMap["A1"]    = ledModule.ledOptions.indexA1;
-	if (ledModule.ledOptions.indexA2 == -1)    ledButtonMap["A2"]    = nullptr;  else ledButtonMap["A2"]    = ledModule.ledOptions.indexA2;
+	if (ledModule.ledOptions.indexUp == -1)
+		ledButtonMap["Up"] = nullptr;
+	else
+		ledButtonMap["Up"] = ledModule.ledOptions.indexUp;
+	if (ledModule.ledOptions.indexDown == -1)
+		ledButtonMap["Down"] = nullptr;
+	else
+		ledButtonMap["Down"] = ledModule.ledOptions.indexDown;
+	if (ledModule.ledOptions.indexLeft == -1)
+		ledButtonMap["Left"] = nullptr;
+	else
+		ledButtonMap["Left"] = ledModule.ledOptions.indexLeft;
+	if (ledModule.ledOptions.indexRight == -1)
+		ledButtonMap["Right"] = nullptr;
+	else
+		ledButtonMap["Right"] = ledModule.ledOptions.indexRight;
+	if (ledModule.ledOptions.indexB1 == -1)
+		ledButtonMap["B1"] = nullptr;
+	else
+		ledButtonMap["B1"] = ledModule.ledOptions.indexB1;
+	if (ledModule.ledOptions.indexB2 == -1)
+		ledButtonMap["B2"] = nullptr;
+	else
+		ledButtonMap["B2"] = ledModule.ledOptions.indexB2;
+	if (ledModule.ledOptions.indexB3 == -1)
+		ledButtonMap["B3"] = nullptr;
+	else
+		ledButtonMap["B3"] = ledModule.ledOptions.indexB3;
+	if (ledModule.ledOptions.indexB4 == -1)
+		ledButtonMap["B4"] = nullptr;
+	else
+		ledButtonMap["B4"] = ledModule.ledOptions.indexB4;
+	if (ledModule.ledOptions.indexL1 == -1)
+		ledButtonMap["L1"] = nullptr;
+	else
+		ledButtonMap["L1"] = ledModule.ledOptions.indexL1;
+	if (ledModule.ledOptions.indexR1 == -1)
+		ledButtonMap["R1"] = nullptr;
+	else
+		ledButtonMap["R1"] = ledModule.ledOptions.indexR1;
+	if (ledModule.ledOptions.indexL2 == -1)
+		ledButtonMap["L2"] = nullptr;
+	else
+		ledButtonMap["L2"] = ledModule.ledOptions.indexL2;
+	if (ledModule.ledOptions.indexR2 == -1)
+		ledButtonMap["R2"] = nullptr;
+	else
+		ledButtonMap["R2"] = ledModule.ledOptions.indexR2;
+	if (ledModule.ledOptions.indexS1 == -1)
+		ledButtonMap["S1"] = nullptr;
+	else
+		ledButtonMap["S1"] = ledModule.ledOptions.indexS1;
+	if (ledModule.ledOptions.indexS2 == -1)
+		ledButtonMap["S2"] = nullptr;
+	else
+		ledButtonMap["S2"] = ledModule.ledOptions.indexS2;
+	if (ledModule.ledOptions.indexL3 == -1)
+		ledButtonMap["L3"] = nullptr;
+	else
+		ledButtonMap["L3"] = ledModule.ledOptions.indexL3;
+	if (ledModule.ledOptions.indexR3 == -1)
+		ledButtonMap["R3"] = nullptr;
+	else
+		ledButtonMap["R3"] = ledModule.ledOptions.indexR3;
+	if (ledModule.ledOptions.indexA1 == -1)
+		ledButtonMap["A1"] = nullptr;
+	else
+		ledButtonMap["A1"] = ledModule.ledOptions.indexA1;
+	if (ledModule.ledOptions.indexA2 == -1)
+		ledButtonMap["A2"] = nullptr;
+	else
+		ledButtonMap["A2"] = ledModule.ledOptions.indexA2;
 
 	auto usedPins = doc.createNestedArray("usedPins");
 	usedPins.add(gamepad.mapDpadUp->pin);
@@ -249,30 +303,30 @@ string setLedOptions()
 	DynamicJsonDocument doc = get_post_data();
 
 	ledModule.ledOptions.useUserDefinedLEDs = true;
-	ledModule.ledOptions.dataPin            = doc["dataPin"];
-	ledModule.ledOptions.ledFormat          = doc["ledFormat"];
-	ledModule.ledOptions.ledLayout          = doc["ledLayout"];
-	ledModule.ledOptions.ledsPerButton      = doc["ledsPerButton"];
-	ledModule.ledOptions.brightnessMaximum  = doc["brightnessMaximum"];
-	ledModule.ledOptions.brightnessSteps    = doc["brightnessSteps"];
-	ledModule.ledOptions.indexUp            = (doc["ledButtonMap"]["Up"]    == nullptr) ? -1 : doc["ledButtonMap"]["Up"];
-	ledModule.ledOptions.indexDown          = (doc["ledButtonMap"]["Down"]  == nullptr) ? -1 : doc["ledButtonMap"]["Down"];
-	ledModule.ledOptions.indexLeft          = (doc["ledButtonMap"]["Left"]  == nullptr) ? -1 : doc["ledButtonMap"]["Left"];
-	ledModule.ledOptions.indexRight         = (doc["ledButtonMap"]["Right"] == nullptr) ? -1 : doc["ledButtonMap"]["Right"];
-	ledModule.ledOptions.indexB1            = (doc["ledButtonMap"]["B1"]    == nullptr) ? -1 : doc["ledButtonMap"]["B1"];
-	ledModule.ledOptions.indexB2            = (doc["ledButtonMap"]["B2"]    == nullptr) ? -1 : doc["ledButtonMap"]["B2"];
-	ledModule.ledOptions.indexB3            = (doc["ledButtonMap"]["B3"]    == nullptr) ? -1 : doc["ledButtonMap"]["B3"];
-	ledModule.ledOptions.indexB4            = (doc["ledButtonMap"]["B4"]    == nullptr) ? -1 : doc["ledButtonMap"]["B4"];
-	ledModule.ledOptions.indexL1            = (doc["ledButtonMap"]["L1"]    == nullptr) ? -1 : doc["ledButtonMap"]["L1"];
-	ledModule.ledOptions.indexR1            = (doc["ledButtonMap"]["R1"]    == nullptr) ? -1 : doc["ledButtonMap"]["R1"];
-	ledModule.ledOptions.indexL2            = (doc["ledButtonMap"]["L2"]    == nullptr) ? -1 : doc["ledButtonMap"]["L2"];
-	ledModule.ledOptions.indexR2            = (doc["ledButtonMap"]["R2"]    == nullptr) ? -1 : doc["ledButtonMap"]["R2"];
-	ledModule.ledOptions.indexS1            = (doc["ledButtonMap"]["S1"]    == nullptr) ? -1 : doc["ledButtonMap"]["S1"];
-	ledModule.ledOptions.indexS2            = (doc["ledButtonMap"]["S2"]    == nullptr) ? -1 : doc["ledButtonMap"]["S2"];
-	ledModule.ledOptions.indexL3            = (doc["ledButtonMap"]["L3"]    == nullptr) ? -1 : doc["ledButtonMap"]["L3"];
-	ledModule.ledOptions.indexR3            = (doc["ledButtonMap"]["R3"]    == nullptr) ? -1 : doc["ledButtonMap"]["R3"];
-	ledModule.ledOptions.indexA1            = (doc["ledButtonMap"]["A1"]    == nullptr) ? -1 : doc["ledButtonMap"]["A1"];
-	ledModule.ledOptions.indexA2            = (doc["ledButtonMap"]["A2"]    == nullptr) ? -1 : doc["ledButtonMap"]["A2"];
+	ledModule.ledOptions.dataPin = doc["dataPin"];
+	ledModule.ledOptions.ledFormat = doc["ledFormat"];
+	ledModule.ledOptions.ledLayout = doc["ledLayout"];
+	ledModule.ledOptions.ledsPerButton = doc["ledsPerButton"];
+	ledModule.ledOptions.brightnessMaximum = doc["brightnessMaximum"];
+	ledModule.ledOptions.brightnessSteps = doc["brightnessSteps"];
+	ledModule.ledOptions.indexUp = (doc["ledButtonMap"]["Up"] == nullptr) ? -1 : doc["ledButtonMap"]["Up"];
+	ledModule.ledOptions.indexDown = (doc["ledButtonMap"]["Down"] == nullptr) ? -1 : doc["ledButtonMap"]["Down"];
+	ledModule.ledOptions.indexLeft = (doc["ledButtonMap"]["Left"] == nullptr) ? -1 : doc["ledButtonMap"]["Left"];
+	ledModule.ledOptions.indexRight = (doc["ledButtonMap"]["Right"] == nullptr) ? -1 : doc["ledButtonMap"]["Right"];
+	ledModule.ledOptions.indexB1 = (doc["ledButtonMap"]["B1"] == nullptr) ? -1 : doc["ledButtonMap"]["B1"];
+	ledModule.ledOptions.indexB2 = (doc["ledButtonMap"]["B2"] == nullptr) ? -1 : doc["ledButtonMap"]["B2"];
+	ledModule.ledOptions.indexB3 = (doc["ledButtonMap"]["B3"] == nullptr) ? -1 : doc["ledButtonMap"]["B3"];
+	ledModule.ledOptions.indexB4 = (doc["ledButtonMap"]["B4"] == nullptr) ? -1 : doc["ledButtonMap"]["B4"];
+	ledModule.ledOptions.indexL1 = (doc["ledButtonMap"]["L1"] == nullptr) ? -1 : doc["ledButtonMap"]["L1"];
+	ledModule.ledOptions.indexR1 = (doc["ledButtonMap"]["R1"] == nullptr) ? -1 : doc["ledButtonMap"]["R1"];
+	ledModule.ledOptions.indexL2 = (doc["ledButtonMap"]["L2"] == nullptr) ? -1 : doc["ledButtonMap"]["L2"];
+	ledModule.ledOptions.indexR2 = (doc["ledButtonMap"]["R2"] == nullptr) ? -1 : doc["ledButtonMap"]["R2"];
+	ledModule.ledOptions.indexS1 = (doc["ledButtonMap"]["S1"] == nullptr) ? -1 : doc["ledButtonMap"]["S1"];
+	ledModule.ledOptions.indexS2 = (doc["ledButtonMap"]["S2"] == nullptr) ? -1 : doc["ledButtonMap"]["S2"];
+	ledModule.ledOptions.indexL3 = (doc["ledButtonMap"]["L3"] == nullptr) ? -1 : doc["ledButtonMap"]["L3"];
+	ledModule.ledOptions.indexR3 = (doc["ledButtonMap"]["R3"] == nullptr) ? -1 : doc["ledButtonMap"]["R3"];
+	ledModule.ledOptions.indexA1 = (doc["ledButtonMap"]["A1"] == nullptr) ? -1 : doc["ledButtonMap"]["A1"];
+	ledModule.ledOptions.indexA2 = (doc["ledButtonMap"]["A2"] == nullptr) ? -1 : doc["ledButtonMap"]["A2"];
 
 	setLEDOptions(ledModule.ledOptions);
 	GamepadStore.save();
@@ -285,24 +339,24 @@ string getPinMappings()
 {
 	DynamicJsonDocument doc(LWIP_HTTPD_POST_MAX_PAYLOAD_LEN);
 
-	doc["Up"]    = gamepad.mapDpadUp->pin;
-	doc["Down"]  = gamepad.mapDpadDown->pin;
-	doc["Left"]  = gamepad.mapDpadLeft->pin;
+	doc["Up"] = gamepad.mapDpadUp->pin;
+	doc["Down"] = gamepad.mapDpadDown->pin;
+	doc["Left"] = gamepad.mapDpadLeft->pin;
 	doc["Right"] = gamepad.mapDpadRight->pin;
-	doc["B1"]    = gamepad.mapButtonB1->pin;
-	doc["B2"]    = gamepad.mapButtonB2->pin;
-	doc["B3"]    = gamepad.mapButtonB3->pin;
-	doc["B4"]    = gamepad.mapButtonB4->pin;
-	doc["L1"]    = gamepad.mapButtonL1->pin;
-	doc["R1"]    = gamepad.mapButtonR1->pin;
-	doc["L2"]    = gamepad.mapButtonL2->pin;
-	doc["R2"]    = gamepad.mapButtonR2->pin;
-	doc["S1"]    = gamepad.mapButtonS1->pin;
-	doc["S2"]    = gamepad.mapButtonS2->pin;
-	doc["L3"]    = gamepad.mapButtonL3->pin;
-	doc["R3"]    = gamepad.mapButtonR3->pin;
-	doc["A1"]    = gamepad.mapButtonA1->pin;
-	doc["A2"]    = gamepad.mapButtonA2->pin;
+	doc["B1"] = gamepad.mapButtonB1->pin;
+	doc["B2"] = gamepad.mapButtonB2->pin;
+	doc["B3"] = gamepad.mapButtonB3->pin;
+	doc["B4"] = gamepad.mapButtonB4->pin;
+	doc["L1"] = gamepad.mapButtonL1->pin;
+	doc["R1"] = gamepad.mapButtonR1->pin;
+	doc["L2"] = gamepad.mapButtonL2->pin;
+	doc["R2"] = gamepad.mapButtonR2->pin;
+	doc["S1"] = gamepad.mapButtonS1->pin;
+	doc["S2"] = gamepad.mapButtonS2->pin;
+	doc["L3"] = gamepad.mapButtonL3->pin;
+	doc["R3"] = gamepad.mapButtonR3->pin;
+	doc["A1"] = gamepad.mapButtonA1->pin;
+	doc["A2"] = gamepad.mapButtonA2->pin;
 
 	return serialize_json(doc);
 }
@@ -313,24 +367,24 @@ string setPinMappings()
 
 	BoardOptions options;
 	options.hasBoardOptions = true;
-	options.pinDpadUp    = doc["Up"];
-	options.pinDpadDown  = doc["Down"];
-	options.pinDpadLeft  = doc["Left"];
+	options.pinDpadUp = doc["Up"];
+	options.pinDpadDown = doc["Down"];
+	options.pinDpadLeft = doc["Left"];
 	options.pinDpadRight = doc["Right"];
-	options.pinButtonB1  = doc["B1"];
-	options.pinButtonB2  = doc["B2"];
-	options.pinButtonB3  = doc["B3"];
-	options.pinButtonB4  = doc["B4"];
-	options.pinButtonL1  = doc["L1"];
-	options.pinButtonR1  = doc["R1"];
-	options.pinButtonL2  = doc["L2"];
-	options.pinButtonR2  = doc["R2"];
-	options.pinButtonS1  = doc["S1"];
-	options.pinButtonS2  = doc["S2"];
-	options.pinButtonL3  = doc["L3"];
-	options.pinButtonR3  = doc["R3"];
-	options.pinButtonA1  = doc["A1"];
-	options.pinButtonA2  = doc["A2"];
+	options.pinButtonB1 = doc["B1"];
+	options.pinButtonB2 = doc["B2"];
+	options.pinButtonB3 = doc["B3"];
+	options.pinButtonB4 = doc["B4"];
+	options.pinButtonL1 = doc["L1"];
+	options.pinButtonR1 = doc["R1"];
+	options.pinButtonL2 = doc["L2"];
+	options.pinButtonR2 = doc["R2"];
+	options.pinButtonS1 = doc["S1"];
+	options.pinButtonS2 = doc["S2"];
+	options.pinButtonL3 = doc["L3"];
+	options.pinButtonR3 = doc["R3"];
+	options.pinButtonA1 = doc["A1"];
+	options.pinButtonA2 = doc["A2"];
 
 	setBoardOptions(options);
 	GamepadStore.save();
@@ -363,8 +417,8 @@ string setPinMappings()
 
 // LWIP callback on HTTP POST to validate the URI
 err_t httpd_post_begin(void *connection, const char *uri, const char *http_request,
-                       uint16_t http_request_len, int content_len, char *response_uri,
-                       uint16_t response_uri_len, uint8_t *post_auto_wnd)
+											 uint16_t http_request_len, int content_len, char *response_uri,
+											 uint16_t response_uri_len, uint8_t *post_auto_wnd)
 {
 	LWIP_UNUSED_ARG(http_request);
 	LWIP_UNUSED_ARG(http_request_len);

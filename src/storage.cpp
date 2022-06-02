@@ -25,35 +25,35 @@ BoardOptions getBoardOptions()
 	options.checksum = 0;
 	if (CRC32::calculate(&options) != lastCRC)
 	{
-		options.hasBoardOptions   = false;
-		options.pinDpadUp         = PIN_DPAD_UP;
-		options.pinDpadDown       = PIN_DPAD_DOWN;
-		options.pinDpadLeft       = PIN_DPAD_LEFT;
-		options.pinDpadRight      = PIN_DPAD_RIGHT;
-		options.pinButtonB1       = PIN_BUTTON_B1;
-		options.pinButtonB2       = PIN_BUTTON_B2;
-		options.pinButtonB3       = PIN_BUTTON_B3;
-		options.pinButtonB4       = PIN_BUTTON_B4;
-		options.pinButtonL1       = PIN_BUTTON_L1;
-		options.pinButtonR1       = PIN_BUTTON_R1;
-		options.pinButtonL2       = PIN_BUTTON_L2;
-		options.pinButtonR2       = PIN_BUTTON_R2;
-		options.pinButtonS1       = PIN_BUTTON_S1;
-		options.pinButtonS2       = PIN_BUTTON_S2;
-		options.pinButtonL3       = PIN_BUTTON_L3;
-		options.pinButtonR3       = PIN_BUTTON_R3;
-		options.pinButtonA1       = PIN_BUTTON_A1;
-		options.pinButtonA2       = PIN_BUTTON_A2;
-		options.buttonLayout      = BUTTON_LAYOUT;
-		options.i2cSDAPin         = I2C_SDA_PIN;
-		options.i2cSCLPin         = I2C_SCL_PIN;
-		options.i2cBlock          = (I2C_BLOCK == i2c0) ? 0 : 1;
-		options.i2cSpeed          = I2C_SPEED;
-		options.hasI2CDisplay     = HAS_I2C_DISPLAY;
+		options.hasBoardOptions = false;
+		options.pinDpadUp = PIN_DPAD_UP;
+		options.pinDpadDown = PIN_DPAD_DOWN;
+		options.pinDpadLeft = PIN_DPAD_LEFT;
+		options.pinDpadRight = PIN_DPAD_RIGHT;
+		options.pinButtonB1 = PIN_BUTTON_B1;
+		options.pinButtonB2 = PIN_BUTTON_B2;
+		options.pinButtonB3 = PIN_BUTTON_B3;
+		options.pinButtonB4 = PIN_BUTTON_B4;
+		options.pinButtonL1 = PIN_BUTTON_L1;
+		options.pinButtonR1 = PIN_BUTTON_R1;
+		options.pinButtonL2 = PIN_BUTTON_L2;
+		options.pinButtonR2 = PIN_BUTTON_R2;
+		options.pinButtonS1 = PIN_BUTTON_S1;
+		options.pinButtonS2 = PIN_BUTTON_S2;
+		options.pinButtonL3 = PIN_BUTTON_L3;
+		options.pinButtonR3 = PIN_BUTTON_R3;
+		options.pinButtonA1 = PIN_BUTTON_A1;
+		options.pinButtonA2 = PIN_BUTTON_A2;
+		options.buttonLayout = BUTTON_LAYOUT;
+		options.i2cSDAPin = I2C_SDA_PIN;
+		options.i2cSCLPin = I2C_SCL_PIN;
+		options.i2cBlock = (I2C_BLOCK == i2c0) ? 0 : 1;
+		options.i2cSpeed = I2C_SPEED;
+		options.hasI2CDisplay = HAS_I2C_DISPLAY;
 		options.displayI2CAddress = DISPLAY_I2C_ADDR;
-		options.displaySize       = DISPLAY_SIZE;
-		options.displayFlip       = DISPLAY_FLIP;
-		options.displayInvert     = DISPLAY_INVERT;
+		options.displaySize = DISPLAY_SIZE;
+		options.displayFlip = DISPLAY_FLIP;
+		options.displayInvert = DISPLAY_INVERT;
 	}
 
 	return options;
@@ -132,12 +132,12 @@ AnimationOptions AnimationStorage::getAnimationOptions()
 	if (CRC32::calculate(&options) != lastCRC)
 	{
 		options.baseAnimationIndex = LEDS_BASE_ANIMATION_INDEX;
-		options.brightness         = LEDS_BRIGHTNESS;
-		options.staticColorIndex   = LEDS_STATIC_COLOR_INDEX;
-		options.buttonColorIndex   = LEDS_BUTTON_COLOR_INDEX;
-		options.chaseCycleTime     = LEDS_CHASE_CYCLE_TIME;
-		options.rainbowCycleTime   = LEDS_RAINBOW_CYCLE_TIME;
-		options.themeIndex         = LEDS_THEME_INDEX;
+		options.brightness = LEDS_BRIGHTNESS;
+		options.staticColorIndex = LEDS_STATIC_COLOR_INDEX;
+		options.buttonColorIndex = LEDS_BUTTON_COLOR_INDEX;
+		options.chaseCycleTime = LEDS_CHASE_CYCLE_TIME;
+		options.rainbowCycleTime = LEDS_RAINBOW_CYCLE_TIME;
+		options.themeIndex = LEDS_THEME_INDEX;
 
 		setAnimationOptions(options);
 	}

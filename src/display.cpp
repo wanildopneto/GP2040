@@ -96,25 +96,45 @@ void setStatusBar(Gamepad *gamepad)
 
 	switch (gamepad->options.inputMode)
 	{
-		case INPUT_MODE_HID:    statusBar += "DINPUT"; break;
-		case INPUT_MODE_SWITCH: statusBar += "SWITCH"; break;
-		case INPUT_MODE_XINPUT: statusBar += "XINPUT"; break;
-		case INPUT_MODE_CONFIG: statusBar += "CONFIG"; break;
+	case INPUT_MODE_HID:
+		statusBar += "DINPUT";
+		break;
+	case INPUT_MODE_SWITCH:
+		statusBar += "SWITCH";
+		break;
+	case INPUT_MODE_XINPUT:
+		statusBar += "XINPUT";
+		break;
+	case INPUT_MODE_CONFIG:
+		statusBar += "CONFIG";
+		break;
 	}
 
 	switch (gamepad->options.dpadMode)
 	{
 
-		case DPAD_MODE_DIGITAL:      statusBar += "         DPAD"; break;
-		case DPAD_MODE_LEFT_ANALOG:  statusBar += "         LEFT"; break;
-		case DPAD_MODE_RIGHT_ANALOG: statusBar += "        RIGHT"; break;
+	case DPAD_MODE_DIGITAL:
+		statusBar += "         DPAD";
+		break;
+	case DPAD_MODE_LEFT_ANALOG:
+		statusBar += "         LEFT";
+		break;
+	case DPAD_MODE_RIGHT_ANALOG:
+		statusBar += "        RIGHT";
+		break;
 	}
 
 	switch (gamepad->options.socdMode)
 	{
-		case SOCD_MODE_NEUTRAL:               statusBar += "-N"; break;
-		case SOCD_MODE_UP_PRIORITY:           statusBar += "-U"; break;
-		case SOCD_MODE_SECOND_INPUT_PRIORITY: statusBar += "-L"; break;
+	case SOCD_MODE_NEUTRAL:
+		statusBar += "-N";
+		break;
+	case SOCD_MODE_UP_PRIORITY:
+		statusBar += "-U";
+		break;
+	case SOCD_MODE_SECOND_INPUT_PRIORITY:
+		statusBar += "-L";
+		break;
 	}
 }
 
@@ -125,16 +145,16 @@ void DisplayModule::setup()
 	if (enabled)
 	{
 		obdI2CInit(&obd,
-			options.displaySize,
-			options.displayI2CAddress,
-			options.displayFlip,
-			options.displayInvert,
-			DISPLAY_USEWIRE,
-			options.i2cSDAPin,
-			options.i2cSCLPin,
-			options.i2cBlock == 0 ? i2c0 : i2c1,
-			-1,
-			options.i2cSpeed);
+							 options.displaySize,
+							 options.displayI2CAddress,
+							 options.displayFlip,
+							 options.displayInvert,
+							 DISPLAY_USEWIRE,
+							 options.i2cSDAPin,
+							 options.i2cSCLPin,
+							 options.i2cBlock == 0 ? i2c0 : i2c1,
+							 -1,
+							 options.i2cSpeed);
 
 		obdSetContrast(&obd, 0xFF);
 		obdSetBackBuffer(&obd, ucBackBuffer);
@@ -156,17 +176,17 @@ void DisplayModule::process(Gamepad *gamepad)
 	drawStatusBar();
 	switch (BUTTON_LAYOUT)
 	{
-		case BUTTON_LAYOUT_ARCADE:
-			drawArcadeStick(8, 28, 8, 2, gamepad);
-			break;
+	case BUTTON_LAYOUT_ARCADE:
+		drawArcadeStick(8, 28, 8, 2, gamepad);
+		break;
 
-		case BUTTON_LAYOUT_HITBOX:
-			drawHitbox(8, 20, 8, 2, gamepad);
-			break;
+	case BUTTON_LAYOUT_HITBOX:
+		drawHitbox(8, 20, 8, 2, gamepad);
+		break;
 
-		case BUTTON_LAYOUT_WASD:
-			drawWasdBox(8, 28, 7, 3, gamepad);
-			break;
+	case BUTTON_LAYOUT_WASD:
+		drawWasdBox(8, 28, 7, 3, gamepad);
+		break;
 	}
 
 	obdDumpBuffer(&obd, NULL);

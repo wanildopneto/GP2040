@@ -33,17 +33,17 @@ uint8_t const *tud_descriptor_device_cb(void)
 {
 	switch (get_input_mode())
 	{
-		case INPUT_MODE_CONFIG:
-			return reinterpret_cast<uint8_t const *>(&webserver_device_descriptor);
+	case INPUT_MODE_CONFIG:
+		return reinterpret_cast<uint8_t const *>(&webserver_device_descriptor);
 
-		case INPUT_MODE_XINPUT:
-			return xinput_device_descriptor;
+	case INPUT_MODE_XINPUT:
+		return xinput_device_descriptor;
 
-		case INPUT_MODE_SWITCH:
-			return switch_device_descriptor;
+	case INPUT_MODE_SWITCH:
+		return switch_device_descriptor;
 
-		default:
-			return hid_device_descriptor;
+	default:
+		return hid_device_descriptor;
 	}
 }
 
@@ -52,14 +52,14 @@ uint8_t const *tud_descriptor_device_cb(void)
 // Descriptor contents must exist long enough for transfer to complete
 uint8_t const *tud_hid_descriptor_report_cb(uint8_t itf)
 {
-	(void) itf;
+	(void)itf;
 	switch (get_input_mode())
 	{
-		case INPUT_MODE_SWITCH:
-			return switch_report_descriptor;
+	case INPUT_MODE_SWITCH:
+		return switch_report_descriptor;
 
-		default:
-			return hid_report_descriptor;
+	default:
+		return hid_report_descriptor;
 	}
 }
 
@@ -70,16 +70,16 @@ uint8_t const *tud_descriptor_configuration_cb(uint8_t index)
 {
 	switch (get_input_mode())
 	{
-		case INPUT_MODE_CONFIG:
-			return net_configuration_arr[index];
+	case INPUT_MODE_CONFIG:
+		return net_configuration_arr[index];
 
-		case INPUT_MODE_XINPUT:
-			return xinput_configuration_descriptor;
+	case INPUT_MODE_XINPUT:
+		return xinput_configuration_descriptor;
 
-		case INPUT_MODE_SWITCH:
-			return switch_configuration_descriptor;
+	case INPUT_MODE_SWITCH:
+		return switch_configuration_descriptor;
 
-		default:
-			return hid_configuration_descriptor;
+	default:
+		return hid_configuration_descriptor;
 	}
 }

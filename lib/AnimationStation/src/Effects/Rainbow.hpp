@@ -8,10 +8,11 @@
 #include <vector>
 #include "../AnimationStation.hpp"
 
-class Rainbow : public Animation {
+class Rainbow : public Animation
+{
 public:
   Rainbow(PixelMatrix &matrix);
-  ~Rainbow() {};
+  ~Rainbow(){};
 
   void Animate(RGB (&frame)[100]);
   void ParameterUp();

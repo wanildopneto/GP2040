@@ -29,20 +29,20 @@ const int TOTAL_EFFECTS = 4;
 typedef enum
 {
   HOTKEY_LEDS_NONE,
-	HOTKEY_LEDS_ANIMATION_UP,
-	HOTKEY_LEDS_ANIMATION_DOWN,
-	HOTKEY_LEDS_PARAMETER_UP,
+  HOTKEY_LEDS_ANIMATION_UP,
+  HOTKEY_LEDS_ANIMATION_DOWN,
+  HOTKEY_LEDS_PARAMETER_UP,
   HOTKEY_LEDS_PRESS_PARAMETER_UP,
   HOTKEY_LEDS_PRESS_PARAMETER_DOWN,
-	HOTKEY_LEDS_PARAMETER_DOWN,
-	HOTKEY_LEDS_BRIGHTNESS_UP,
-	HOTKEY_LEDS_BRIGHTNESS_DOWN
+  HOTKEY_LEDS_PARAMETER_DOWN,
+  HOTKEY_LEDS_BRIGHTNESS_UP,
+  HOTKEY_LEDS_BRIGHTNESS_DOWN
 } AnimationHotkey;
 
-struct __attribute__ ((__packed__)) AnimationOptions
+struct __attribute__((__packed__)) AnimationOptions
 {
   uint32_t checksum;
-	uint8_t baseAnimationIndex;
+  uint8_t baseAnimationIndex;
   uint8_t brightness;
   uint8_t staticColorIndex;
   uint8_t buttonColorIndex;
@@ -76,8 +76,8 @@ public:
   static void IncreaseBrightness();
   static void SetOptions(AnimationOptions options);
 
-  Animation* baseAnimation;
-  Animation* buttonAnimation;
+  Animation *baseAnimation;
+  Animation *buttonAnimation;
   std::vector<Pixel> lastPressed;
   static AnimationOptions options;
   static absolute_time_t nextChange;

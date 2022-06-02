@@ -1,5 +1,6 @@
 OneBitDisplay (1-bpp OLED/LCD library)<br>
 -----------------------------------
+
 Project started 3/23/2020<br>
 Copyright (c) 2020 BitBank Software, Inc.<br>
 Written by Larry Bank<br>
@@ -21,6 +22,7 @@ It uses the SH1107 controller and behaves very similarly to the SH1106.
 
 Features:<br>
 ---------<br>
+
 - Supports any number of simultaneous displays of any type (mix and match)<br>
 - Optionally detect the display address and type (I2C only)<br>
 - Supports 72x40, 96x16, 64x32, 128x32, 128x64, 64x128 (SH1107), 128x128 (SH1107) and 132x64 (SH1106) OLED display sizes<br>
@@ -45,10 +47,10 @@ Features:<br>
 - Run full frame animations at high frame rates with a simple API<br>
 <br>
 This code depends on the BitBang_I2C library. You can download it here:<br>
-https://github.com/bitbank2/BitBang_I2C
+<https://github.com/bitbank2/BitBang_I2C>
 <br>
 See the Wiki for help getting started<br>
-https://github.com/bitbank2/OneBitDisplay/wiki <br>
+<https://github.com/bitbank2/OneBitDisplay/wiki> <br>
 <br>
 
 ![Fonts](/fonts_opt.jpg?raw=true "fonts")
@@ -69,10 +71,9 @@ address of the display will be detected automatically (either 0x3c or 0x3d) or y
 <br>
 After initializing the display you can begin drawing text or graphics on it. The final parameter of all of the drawing functions is a render flag. When true, the graphics will be sent to the internal backing buffer (when available) and sent to the display. You optionally pass the library a backing buffer (if your MCU has enough RAM) with the obdSetBackBuffer() function. When the render flag is false, the graphics will only be drawn into the internal buffer. Once you're ready to send the pixels to the display, call obdDumpBuffer(NULL) and it will copy the internal buffer in its entirety to the display.<br>
 <br>
-The text drawing function now has a scroll offset parameter. This tells it how many pixels of the text to skip before drawing the text at the given destination coordinates. For example, if you pass a value of 20 for the scroll offset and are using an 8-pixel wide font (FONT_8x8), the first two and a half characters will not be drawn; the second half of the third and subsequent characters will be drawn starting at the x/y you specified. This allows you to create a scrolling text effect by repeatedly calling the oledWriteString() function with progressively larger scroll offset values to make the text scroll from right to left.<br> 
+The text drawing function now has a scroll offset parameter. This tells it how many pixels of the text to skip before drawing the text at the given destination coordinates. For example, if you pass a value of 20 for the scroll offset and are using an 8-pixel wide font (FONT_8x8), the first two and a half characters will not be drawn; the second half of the third and subsequent characters will be drawn starting at the x/y you specified. This allows you to create a scrolling text effect by repeatedly calling the oledWriteString() function with progressively larger scroll offset values to make the text scroll from right to left.<br>
 <br>
 
 If you find this code useful, please consider sending a donation or becomming a Github sponsor.
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SR4F44J2UR8S4)
-

@@ -1,4 +1,4 @@
- /*
+/*
  * SPDX-License-Identifier: MIT
  * SPDX-FileCopyrightText: Copyright (c) 2021 Jason Skuby (mytechtoybox.com)
  */
@@ -10,9 +10,9 @@
 #include "NeoPico.hpp"
 #include "enums.h"
 
-#define GAMEPAD_STORAGE_INDEX      0 // 1024 bytes for gamepad options
-#define BOARD_STORAGE_INDEX     1024 //  512 bytes for hardware options
-#define LED_STORAGE_INDEX       1536 //  512 bytes for LED configuration
+#define GAMEPAD_STORAGE_INDEX 0			 // 1024 bytes for gamepad options
+#define BOARD_STORAGE_INDEX 1024		 //  512 bytes for hardware options
+#define LED_STORAGE_INDEX 1536			 //  512 bytes for LED configuration
 #define ANIMATION_STORAGE_INDEX 2048 // ???? bytes for LED animations
 
 struct BoardOptions

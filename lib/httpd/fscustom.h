@@ -4,11 +4,12 @@
 #include "fs.h"
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-int fs_open_custom(struct fs_file *file, const char *name);
-void fs_close_custom(struct fs_file *file);
+	int fs_open_custom(struct fs_file *file, const char *name);
+	void fs_close_custom(struct fs_file *file);
 
 #ifdef __cplusplus
 }

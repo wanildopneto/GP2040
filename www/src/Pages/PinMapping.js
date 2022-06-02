@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { NavLink } from "react-router-dom";
+import { useContext, useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { AppContext } from '../Contexts/AppContext';
+import { NavLink } from "react-router-dom";
 import Section from '../Components/Section';
-import WebApi, { baseButtonMappings } from '../Services/WebApi';
+import { AppContext } from '../Contexts/AppContext';
 import boards from '../Data/Boards.json';
 import BUTTONS from '../Data/Buttons.json';
+import WebApi, { baseButtonMappings } from '../Services/WebApi';
 import './PinMappings.scss';
 
 const requiredButtons = ['B1', 'B2', 'B3', 'S2'];

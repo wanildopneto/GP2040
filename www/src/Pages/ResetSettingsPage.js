@@ -1,4 +1,3 @@
-import React from 'react';
 import DangerSection from '../Components/DangerSection';
 import WebApi from '../Services/WebApi';
 

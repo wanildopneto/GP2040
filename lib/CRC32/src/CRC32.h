@@ -10,7 +10,8 @@
 
 /// \brief A class for calculating the CRC32 checksum from arbitrary data.
 /// \sa http://forum.arduino.cc/index.php?topic=91179.0
-class CRC32 {
+class CRC32
+{
 public:
 	/// \brief Initialize an empty CRC32 checksum.
 	CRC32();
@@ -26,7 +27,8 @@ public:
 	/// \tparam Type The data type to read.
 	/// \param data The data to add to the checksum.
 	template <typename Type>
-	void update(const Type &data) {
+	void update(const Type &data)
+	{
 		update(&data, 1);
 	}
 
@@ -35,7 +37,8 @@ public:
 	/// \param data The array to add to the checksum.
 	/// \param size Size of the array to add.
 	template <typename Type>
-	void update(const Type *data, uint16_t size) {
+	void update(const Type *data, uint16_t size)
+	{
 		uint16_t nBytes = size * sizeof(Type);
 		const uint8_t *pData = (const uint8_t *)data;
 
@@ -54,7 +57,8 @@ public:
 	/// \param size The size of the data to add to the checksum.
 	/// \returns the calculated checksum.
 	template <typename Type>
-	static uint32_t calculate(const Type *data, uint16_t size = 1) {
+	static uint32_t calculate(const Type *data, uint16_t size = 1)
+	{
 		CRC32 crc;
 		crc.update(data, size);
 		return crc.finalize();

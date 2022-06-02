@@ -22,6 +22,7 @@ public:
   LEDFormat GetFormat();
   // void SetPixel(int pixel, uint32_t color);
   void SetFrame(uint32_t newFrame[100]);
+
 private:
   void PutPixel(uint32_t pixel_grb);
   LEDFormat format;

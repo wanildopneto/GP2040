@@ -31,11 +31,11 @@ queue_t gamepadQueue;
 DisplayModule displayModule;
 LEDModule ledModule;
 PLEDModule pledModule(PLED_TYPE);
-std::vector<GPModule*> modules =
-{
-	&displayModule,
-	&ledModule,
-	&pledModule,
+std::vector<GPModule *> modules =
+		{
+				&displayModule,
+				&ledModule,
+				&pledModule,
 };
 
 void setup();
@@ -110,7 +110,7 @@ void loop()
 	static const uint16_t reportSize = gamepad.getReportSize();
 	static const uint32_t intervalMS = 1;
 	static uint32_t nextRuntime = 0;
-	static uint8_t featureData[32] = { };
+	static uint8_t featureData[32] = {};
 	static Gamepad snapshot;
 
 	if (getMillis() - nextRuntime < 0)

@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Navigation from './Components/Navigation';
 import { AppContext } from './Contexts/AppContext';
-import Navigation from './Components/Navigation'
 
-import HomePage from './Pages/HomePage'
+import DisplayConfigPage from './Pages/DisplayConfig';
+import HomePage from './Pages/HomePage';
+import LEDConfigPage from './Pages/LEDConfigPage';
 import PinMappingPage from "./Pages/PinMapping";
 import ResetSettingsPage from './Pages/ResetSettingsPage';
 import SettingsPage from './Pages/SettingsPage';
-import DisplayConfigPage from './Pages/DisplayConfig';
-import LEDConfigPage from './Pages/LEDConfigPage';
 
-import { loadButtonLabels } from './Services/Storage';
 import './App.scss';
+import { loadButtonLabels } from './Services/Storage';
 
 const App = () => {
 	const [buttonLabels, setButtonLabels] = useState(loadButtonLabels() ?? 'gp2040');

@@ -34,33 +34,33 @@ typedef enum
 } PLEDAnimationType;
 
 const PLEDAnimationType ANIMATION_TYPES[] =
-{
-	PLED_ANIM_NONE,
-	PLED_ANIM_OFF,
-	PLED_ANIM_SOLID,
-	PLED_ANIM_BLINK,
-	PLED_ANIM_CYCLE,
-	PLED_ANIM_FADE,
+		{
+				PLED_ANIM_NONE,
+				PLED_ANIM_OFF,
+				PLED_ANIM_SOLID,
+				PLED_ANIM_BLINK,
+				PLED_ANIM_CYCLE,
+				PLED_ANIM_FADE,
 };
 
 typedef enum
 {
-	PLED_SPEED_OFF       = 0,
+	PLED_SPEED_OFF = 0,
 	PLED_SPEED_LUDICROUS = 20,
-	PLED_SPEED_FASTER    = 100,
-	PLED_SPEED_FAST      = 250,
-	PLED_SPEED_NORMAL    = 500,
-	PLED_SPEED_SLOW      = 1000,
+	PLED_SPEED_FASTER = 100,
+	PLED_SPEED_FAST = 250,
+	PLED_SPEED_NORMAL = 500,
+	PLED_SPEED_SLOW = 1000,
 } PLEDAnimationSpeed;
 
 const PLEDAnimationSpeed ANIMATION_SPEEDS[] =
-{
-	PLED_SPEED_OFF,
-	PLED_SPEED_LUDICROUS,
-	PLED_SPEED_FASTER,
-	PLED_SPEED_FAST,
-	PLED_SPEED_NORMAL,
-	PLED_SPEED_SLOW,
+		{
+				PLED_SPEED_OFF,
+				PLED_SPEED_LUDICROUS,
+				PLED_SPEED_FASTER,
+				PLED_SPEED_FAST,
+				PLED_SPEED_NORMAL,
+				PLED_SPEED_SLOW,
 };
 
 struct PLEDAnimationState
@@ -72,84 +72,84 @@ struct PLEDAnimationState
 
 class PlayerLEDs
 {
-	public:
-		virtual void setup() = 0;
-		virtual void display() = 0;
-		void animate(PLEDAnimationState animationState);
+public:
+	virtual void setup() = 0;
+	virtual void display() = 0;
+	void animate(PLEDAnimationState animationState);
 
-	protected:
-		void parseState(uint8_t state)
+protected:
+	void parseState(uint8_t state)
+	{
+		memcpy(lastPledState, currentPledState, sizeof(currentPledState));
+		for (int i = 0; i < PLED_COUNT; i++)
+			currentPledState[i] = (state & (1 << i)) == (1 << i);
+	}
+
+	inline void reset()
+	{
+		memset(lastPledState, 0, sizeof(lastPledState));
+		memset(currentPledState, 0, sizeof(currentPledState));
+		nextAnimationTime = get_absolute_time();
+		brightness = PLED_MAX_BRIGHTNESS;
+		fadeIn = false;
+	}
+
+	inline void handleBlink(PLEDAnimationSpeed speed)
+	{
+		for (int i = 0; i < PLED_COUNT; i++)
 		{
-			memcpy(lastPledState, currentPledState, sizeof(currentPledState));
-			for (int i = 0; i < PLED_COUNT; i++)
-				currentPledState[i] = (state & (1 << i)) == (1 << i);
+			if (lastPledState[i])
+				currentPledState[i] = false;
 		}
+		nextAnimationTime = make_timeout_time_ms(speed);
+	}
 
-		inline void reset()
+	inline void handleCycle(PLEDAnimationSpeed speed)
+	{
+		for (int i = 0; i < PLED_COUNT; i++)
 		{
-			memset(lastPledState, 0, sizeof(lastPledState));
-			memset(currentPledState, 0, sizeof(currentPledState));
-			nextAnimationTime = get_absolute_time();
-			brightness = PLED_MAX_BRIGHTNESS;
-			fadeIn = false;
-		}
-
-		inline void handleBlink(PLEDAnimationSpeed speed)
-		{
-			for (int i = 0; i < PLED_COUNT; i++)
+			if (lastPledState[i] != 0)
 			{
-				if (lastPledState[i])
-					currentPledState[i] = false;
-			}
-			nextAnimationTime = make_timeout_time_ms(speed);
-		}
-
-		inline void handleCycle(PLEDAnimationSpeed speed)
-		{
-			for (int i = 0; i < PLED_COUNT; i++)
-			{
-				if (lastPledState[i] != 0)
+				memset(currentPledState, 0, sizeof(currentPledState));
+				for (int j = 0; j < PLED_COUNT; j++)
 				{
-					memset(currentPledState, 0, sizeof(currentPledState));
-					for (int j = 0; j < PLED_COUNT; j++)
+					if (lastPledState[j])
 					{
-						if (lastPledState[j])
-						{
-							currentPledState[(j + 1) % PLED_COUNT] = true;
-							break;
-						}
+						currentPledState[(j + 1) % PLED_COUNT] = true;
+						break;
 					}
-					break;
 				}
+				break;
 			}
-			nextAnimationTime = make_timeout_time_ms(speed);
 		}
+		nextAnimationTime = make_timeout_time_ms(speed);
+	}
 
-		inline void handleFade()
+	inline void handleFade()
+	{
+		if (fadeIn)
 		{
-			if (fadeIn)
-			{
-				brightness += 5;
-				if (brightness == PLED_MAX_BRIGHTNESS)
-					fadeIn = false;
-			}
-			else
-			{
-				brightness -= 5;
-				if (brightness == 0)
-					fadeIn = true;
-			}
-
-			nextAnimationTime = make_timeout_time_ms(PLED_SPEED_LUDICROUS);
+			brightness += 5;
+			if (brightness == PLED_MAX_BRIGHTNESS)
+				fadeIn = false;
+		}
+		else
+		{
+			brightness -= 5;
+			if (brightness == 0)
+				fadeIn = true;
 		}
 
-		uint16_t ledLevels[PLED_COUNT] = {PLED_MAX_LEVEL, PLED_MAX_LEVEL, PLED_MAX_LEVEL, PLED_MAX_LEVEL};
-		absolute_time_t nextAnimationTime;
-		PLEDAnimationType selectedAnimation = PLED_ANIM_NONE;
-		bool lastPledState[PLED_COUNT] = { };
-		bool currentPledState[PLED_COUNT] = { };
-		uint8_t brightness = PLED_MAX_BRIGHTNESS;
-		bool fadeIn = false;
+		nextAnimationTime = make_timeout_time_ms(PLED_SPEED_LUDICROUS);
+	}
+
+	uint16_t ledLevels[PLED_COUNT] = {PLED_MAX_LEVEL, PLED_MAX_LEVEL, PLED_MAX_LEVEL, PLED_MAX_LEVEL};
+	absolute_time_t nextAnimationTime;
+	PLEDAnimationType selectedAnimation = PLED_ANIM_NONE;
+	bool lastPledState[PLED_COUNT] = {};
+	bool currentPledState[PLED_COUNT] = {};
+	uint8_t brightness = PLED_MAX_BRIGHTNESS;
+	bool fadeIn = false;
 };
 
 #endif

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { orderBy } from 'lodash';
+import { useEffect, useState } from 'react';
 
 import Section from '../Components/Section';
 

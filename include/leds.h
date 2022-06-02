@@ -1,7 +1,7 @@
 /*
-* SPDX-License-Identifier: MIT
-* SPDX-FileCopyrightText: Copyright (c) 2021 Jason Skuby (mytechtoybox.com)
-*/
+ * SPDX-License-Identifier: MIT
+ * SPDX-FileCopyrightText: Copyright (c) 2021 Jason Skuby (mytechtoybox.com)
+ */
 
 #ifndef LEDS_H_
 #define LEDS_H_
@@ -67,11 +67,11 @@
 #endif
 
 #ifndef LEDS_DPAD_LEFT
-#define LEDS_DPAD_LEFT  -1
+#define LEDS_DPAD_LEFT -1
 #endif
 
 #ifndef LEDS_DPAD_DOWN
-#define LEDS_DPAD_DOWN  -1
+#define LEDS_DPAD_DOWN -1
 #endif
 
 #ifndef LEDS_DPAD_RIGHT
@@ -79,63 +79,63 @@
 #endif
 
 #ifndef LEDS_DPAD_UP
-#define LEDS_DPAD_UP    -1
+#define LEDS_DPAD_UP -1
 #endif
 
 #ifndef LEDS_BUTTON_B1
-#define LEDS_BUTTON_B1  -1
+#define LEDS_BUTTON_B1 -1
 #endif
 
 #ifndef LEDS_BUTTON_B2
-#define LEDS_BUTTON_B2  -1
+#define LEDS_BUTTON_B2 -1
 #endif
 
 #ifndef LEDS_BUTTON_B3
-#define LEDS_BUTTON_B3  -1
+#define LEDS_BUTTON_B3 -1
 #endif
 
 #ifndef LEDS_BUTTON_B4
-#define LEDS_BUTTON_B4  -1
+#define LEDS_BUTTON_B4 -1
 #endif
 
 #ifndef LEDS_BUTTON_R1
-#define LEDS_BUTTON_R1  -1
+#define LEDS_BUTTON_R1 -1
 #endif
 
 #ifndef LEDS_BUTTON_L1
-#define LEDS_BUTTON_L1  -1
+#define LEDS_BUTTON_L1 -1
 #endif
 
 #ifndef LEDS_BUTTON_L2
-#define LEDS_BUTTON_L2  -1
+#define LEDS_BUTTON_L2 -1
 #endif
 
 #ifndef LEDS_BUTTON_R2
-#define LEDS_BUTTON_R2  -1
+#define LEDS_BUTTON_R2 -1
 #endif
 
 #ifndef LEDS_BUTTON_S1
-#define LEDS_BUTTON_S1  -1
+#define LEDS_BUTTON_S1 -1
 #endif
 
 #ifndef LEDS_BUTTON_S2
-#define LEDS_BUTTON_S2  -1
+#define LEDS_BUTTON_S2 -1
 #endif
 
 #ifndef LEDS_BUTTON_L3
-#define LEDS_BUTTON_L3  -1
+#define LEDS_BUTTON_L3 -1
 #endif
 
 #ifndef LEDS_BUTTON_R3
-#define LEDS_BUTTON_R3  -1
+#define LEDS_BUTTON_R3 -1
 #endif
 
 #ifndef LEDS_BUTTON_A1
-#define LEDS_BUTTON_A1  -1
+#define LEDS_BUTTON_A1 -1
 #endif
 
 #ifndef LEDS_BUTTON_A2
-#define LEDS_BUTTON_A2  -1
+#define LEDS_BUTTON_A2 -1
 #endif
 
 void configureAnimations(AnimationStation *as);
@@ -144,7 +144,8 @@ void configureLEDs(LEDOptions ledOptions);
 PixelMatrix createLedButtonLayout(ButtonLayout layout, int ledsPerPixel);
 PixelMatrix createLedButtonLayout(ButtonLayout layout, std::vector<uint8_t> *positions);
 
-class LEDModule : public GPModule {
+class LEDModule : public GPModule
+{
 public:
 	void setup();
 	void loop();

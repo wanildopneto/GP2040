@@ -19,20 +19,20 @@ void PlayerLEDs::animate(PLEDAnimationState animationState)
 
 	switch (selectedAnimation)
 	{
-		case PLED_ANIM_BLINK:
-			handleBlink(animationState.speed);
-			break;
+	case PLED_ANIM_BLINK:
+		handleBlink(animationState.speed);
+		break;
 
-		case PLED_ANIM_CYCLE:
-			handleCycle(animationState.speed);
-			break;
+	case PLED_ANIM_CYCLE:
+		handleCycle(animationState.speed);
+		break;
 
-		case PLED_ANIM_FADE:
-			handleFade();
-			break;
+	case PLED_ANIM_FADE:
+		handleFade();
+		break;
 
-		default:
-			break;
+	default:
+		break;
 	}
 
 	for (int i = 0; i < PLED_COUNT; i++)

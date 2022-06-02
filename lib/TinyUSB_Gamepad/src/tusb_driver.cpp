@@ -45,7 +45,7 @@ void receive_report(uint8_t *buffer)
 
 void send_report(void *report, uint16_t report_size)
 {
-	static uint8_t previous_report[CFG_TUD_ENDPOINT0_SIZE] = { };
+	static uint8_t previous_report[CFG_TUD_ENDPOINT0_SIZE] = {};
 
 	if (tud_suspended())
 		tud_remote_wakeup();
@@ -55,13 +55,13 @@ void send_report(void *report, uint16_t report_size)
 		bool sent = false;
 		switch (input_mode)
 		{
-			case INPUT_MODE_XINPUT:
-				sent = send_xinput_report(report, report_size);
-				break;
+		case INPUT_MODE_XINPUT:
+			sent = send_xinput_report(report, report_size);
+			break;
 
-			default:
-				sent = send_hid_report(0, report, report_size);
-				break;
+		default:
+			sent = send_hid_report(0, report, report_size);
+			break;
 		}
 
 		if (sent)
@@ -83,11 +83,11 @@ const usbd_class_driver_t *usbd_app_driver_get_cb(uint8_t *driver_count)
 	{
 		switch (input_mode)
 		{
-			case INPUT_MODE_XINPUT:
-				return &xinput_driver;
+		case INPUT_MODE_XINPUT:
+			return &xinput_driver;
 
-			default:
-				return &hid_driver;
+		default:
+			return &hid_driver;
 		}
 	}
 }
@@ -110,15 +110,15 @@ uint16_t tud_hid_get_report_cb(uint8_t itf, uint8_t report_id, hid_report_type_t
 	HIDReport hid_report;
 	switch (input_mode)
 	{
-		case INPUT_MODE_SWITCH:
-			report_size = sizeof(SwitchReport);
-			memcpy(buffer, &switch_report, report_size);
-			break;
+	case INPUT_MODE_SWITCH:
+		report_size = sizeof(SwitchReport);
+		memcpy(buffer, &switch_report, report_size);
+		break;
 
-		default:
-			report_size = sizeof(HIDReport);
-			memcpy(buffer, &hid_report, report_size);
-			break;
+	default:
+		report_size = sizeof(HIDReport);
+		memcpy(buffer, &hid_report, report_size);
+		break;
 	}
 
 	return report_size;
@@ -128,12 +128,11 @@ uint16_t tud_hid_get_report_cb(uint8_t itf, uint8_t report_id, hid_report_type_t
 // received data on OUT endpoint ( Report ID = 0, Type = 0 )
 void tud_hid_set_report_cb(uint8_t itf, uint8_t report_id, hid_report_type_t report_type, uint8_t const *buffer, uint16_t bufsize)
 {
-	(void) itf;
+	(void)itf;
 
 	// echo back anything we received from host
 	tud_hid_report(report_id, buffer, bufsize);
 }
-
 
 /* Device callbacks (Optional) */
 

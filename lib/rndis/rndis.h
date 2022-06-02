@@ -2,11 +2,12 @@
 #define RNDIS_H_
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-int rndis_init(void);
-void rndis_task(void);
+	int rndis_init(void);
+	void rndis_task(void);
 
 #ifdef __cplusplus
 }

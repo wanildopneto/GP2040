@@ -8,10 +8,11 @@
 #include <vector>
 #include "../AnimationStation.hpp"
 
-class Chase : public Animation {
+class Chase : public Animation
+{
 public:
   Chase(PixelMatrix &matrix);
-  ~Chase() {};
+  ~Chase(){};
 
   void Animate(RGB (&frame)[100]);
   void ParameterUp();

@@ -1,5 +1,6 @@
 Bit Bang I2C library
 --------------------
+
 Copyright (c) 2018 BitBank Software, Inc.
 Written by Larry Bank (bitbank@pobox.com)
 Project started 10/12/2018
@@ -20,25 +21,27 @@ port name + bit, the library will run considerably faster on AVR
 microcontrollers. For example, On the Arduino Uno (ATmega328P), I/O pin 9 is
 actually I/O Port B, bit 1. To use the direct pin method, you would specify
 the pin number as `0xB1`. On the ATtiny85, this is the only pin numbering
-supported so that the Wire library doesn't get linked in (to save FLASH space). 
+supported so that the Wire library doesn't get linked in (to save FLASH space).
 
 This latest version allows you to use this library for both bit-bang I2C or
 make use of the Wire library indirectly. Since each BBI2C object is independent,
 you can have as many buses as you like operating on any combination of
 bit-bang and hardware I2C.
- 
-Usage:
+
+Usage
 -----
+
 Start by initializing a BBI2C structure with the desired pin numbers for SDA/SCL
 along with the desired clock frequency. The bWire flag tells the library to use
 hardware I2C when set to true. If using the hardware I2C (Wire library), the
 pin numbers can be set to `0xff` to use the default I2C pins or to specific pins
-on systems which support multiple I2C buses. Frequencies above 400Khz are 
+on systems which support multiple I2C buses. Frequencies above 400Khz are
 possible, but not necessarily accurate. Luckily I2C devices don't really
 care about the exact clock frequency, only that the signals are stable
 within the given periods.
 
 For Example:
+
 ```C++
 BBI2C bbi2c;
 bbi2c.bWire = 0; // use bit banging
@@ -71,6 +74,7 @@ I2CWrite(&bbi2c, uint8_t iAddr, uint8_t *pData, int iLen);
 ```
 
 There are currently 29 devices recognized by the discover function:
+
 - SSD1306
 - SH1106
 - VL53L0X
@@ -105,5 +109,3 @@ There are currently 29 devices recognized by the discover function:
 If you find this code useful, please consider sending a donation.
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SR4F44J2UR8S4)
-
-

@@ -52,12 +52,13 @@ public:
 class PLEDModule : public GPModule
 {
 public:
-	PLEDModule(PLEDType type) : type(type) { }
+	PLEDModule(PLEDType type) : type(type) {}
 
 	void setup();
 	void loop();
 	void process(Gamepad *gamepad);
 	queue_t featureQueue;
+
 protected:
 	PLEDType type;
 	PlayerLEDs *pleds = nullptr;

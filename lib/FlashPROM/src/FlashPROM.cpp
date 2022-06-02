@@ -5,13 +5,14 @@
 
 #include "FlashPROM.h"
 
-uint8_t FlashPROM::cache[EEPROM_SIZE_BYTES] = { };
+uint8_t FlashPROM::cache[EEPROM_SIZE_BYTES] = {};
 volatile static alarm_id_t flashWriteAlarm = 0;
 volatile static spin_lock_t *flashLock = nullptr;
 
 int64_t writeToFlash(alarm_id_t id, void *flashCache)
 {
-	while (is_spin_locked(flashLock));
+	while (is_spin_locked(flashLock))
+		;
 
 	multicore_lockout_start_blocking();
 	uint32_t interrupts = spin_lock_blocking(flashLock);
@@ -54,7 +55,8 @@ void FlashPROM::start()
 	to commit in that timeframe, we'll hold off until the user is done sending changes. */
 void FlashPROM::commit()
 {
-	while (is_spin_locked(flashLock));
+	while (is_spin_locked(flashLock))
+		;
 	cancel_alarm(flashWriteAlarm);
 	flashWriteAlarm = add_alarm_in_ms(EEPROM_WRITE_WAIT, writeToFlash, cache, true);
 }
